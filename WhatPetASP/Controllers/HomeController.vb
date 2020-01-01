@@ -16,4 +16,10 @@
 
         Return View()
     End Function
+
+    Function ShowPets() As ActionResult
+        ViewData("Message") = "All the pets."
+
+        Return View()
+    End Function
 End Class

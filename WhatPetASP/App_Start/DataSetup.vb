@@ -1,10 +1,105 @@
-﻿Imports Microsoft.VisualBasic
+﻿Imports System.Data.SqlClient
 Imports System.IO
-Imports System.Data
-Imports System.Data.SqlClient
+
 Public Class DataSetup
-    Inherits System.Web.UI.Page
-    Private myConn As SqlConnection
+    Shared Function InsertIntoDB()
+        'Create a Connection object
+        Dim myConn = New SqlConnection("Initial Catalog=Pets;Data Source=tcp:mssqluk18.prosql.net;User ID=oliver;Password=Vintage12!$;")
+
+        'Connect to DB
+        myConn.Open()
+
+        Dim myCmd As SqlCommand
+        Dim Count
+
+        myCmd = myConn.CreateCommand
+        myCmd.CommandText = Command()
+
+        myCmd.CommandText = "DELETE FROM pets.dbo.PetClass"
+        'Execute the command.
+        Count = myCmd.ExecuteNonQuery()
+
+        myCmd.CommandText = "DELETE FROM pets.dbo.Species"
+        'Execute the command.
+        Count = myCmd.ExecuteNonQuery()
+
+
+        myCmd.CommandText = "DELETE FROM pets.dbo.PetType"
+        'Execute the command.
+        Count = myCmd.ExecuteNonQuery()
+
+        Dim CSVImportVB As New DataSetup
+        CSVImportVB.PC_CSVImport("PetClass.csv")
+        CSVImportVB.S_CSVImport("Species.csv")
+        CSVImportVB.PT_CSVImport("PetType.csv")
+
+        myConn.Close()
+
+        Return True
+
+    End Function
+
+    Shared Function CreateTables() As Boolean
+        'Create a Connection object
+        Dim myConn = New SqlConnection("Initial Catalog=Pets;Data Source=tcp:mssqluk18.prosql.net;User ID=oliver;Password=Vintage12!$;")
+
+        'Connect to DB
+        myConn.Open()
+
+        Dim myCmd As SqlCommand
+        Dim Count
+
+        myCmd = myConn.CreateCommand
+        myCmd.CommandText = Command()
+
+        'Users table
+        'UserID represents the DB's ID code for the user (user will never see)
+        'RegisteredDate will track the date upon which that user registered
+        'PassHash will store a hashed version of the user's password to add security in case of DB compromise
+        myCmd.CommandText = "IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = N'Users')
+        PRINT 'Table Exists'
+        ELSE CREATE TABLE dbo.Users (UserID uniqueidentifier ROWGUIDCOL NOT NULL PRIMARY KEY,
+        FirstName varchar(128) NOT NULL, LastName varchar(128) NOT NULL, Gender varchar (128)
+        NOT NULL, Email varchar(128) NOT NULL, RegisteredDate datetime NOT NULL,
+        PassHash varchar(512) NOT NULL);"
+
+        'Execute the command.
+        Count = myCmd.ExecuteNonQuery()
+
+        'Class table (mammal, bird, reptile etc.)
+        myCmd.CommandText = "IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = N'PetClass')
+        PRINT 'Table Exists'
+        ELSE CREATE TABLE dbo.PetClass (PetClassID uniqueidentifier ROWGUIDCOL NOT NULL PRIMARY KEY,
+        ClassName varchar(128) NOT NULL);"
+
+        'Execute the command.
+        Count = myCmd.ExecuteNonQuery()
+
+        'Species table (cat, dog etc.)
+        myCmd.CommandText = "IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = N'Species')
+        PRINT 'Table Exists'
+        ELSE CREATE TABLE dbo.Species (SpeciesID uniqueidentifier ROWGUIDCOL NOT NULL PRIMARY KEY,
+        SpeciesName varchar(128) NOT NULL,
+        PetClassID uniqueidentifier NOT NULL);"
+
+        'Execute the command.
+        Count = myCmd.ExecuteNonQuery()
+
+        'PetType table (characteristics of specific breed)
+        'PetSize will work on values of either Small, Average, or Large (as determined by the average for that particular species)
+        myCmd.CommandText = "IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = N'PetType')
+        PRINT 'Table Exists'
+        ELSE CREATE TABLE dbo.PetType (TypeID uniqueidentifier ROWGUIDCOL NOT NULL PRIMARY KEY,
+        SpeciesID uniqueidentifier NOT NULL, TypeName varchar(128) NOT NULL, PetSize varchar(128) NOT NULL,
+        PetSolitary varchar(128) NOT NULL, PetIndoors varchar(128) NOT NULL, PetOutdoors varchar(128) NOT NULL,
+        PetWalk varchar(128) NOT NULL, PetDiet varchar(128) NOT NULL, PetImage varchar(512) NOT NULL);"
+
+        'Execute the command.
+        Count = myCmd.ExecuteNonQuery()
+
+        Return True
+    End Function
+
     Private Function SendToDB(myConn As SqlConnection, Command As String) As Integer
         Dim myCmd As SqlCommand
         myCmd = myConn.CreateCommand
@@ -28,16 +123,16 @@ Public Class DataSetup
         myReader.Close()
         Return results
     End Function
-    Public Function PC_CSVImport(FileName As String) As Boolean
+    Private Function PC_CSVImport(FileName As String) As Boolean
         'Create a Connection object
-        myConn = New SqlConnection("Initial Catalog=Pets;Data Source=tcp:mssqluk18.prosql.net;User ID=oliver;Password=Vintage12!$;")
+        Dim myConn = New SqlConnection("Initial Catalog=Pets;Data Source=tcp:mssqluk18.prosql.net;User ID=oliver;Password=Vintage12!$;")
 
         'Connect to DB
         myConn.Open()
         Dim Cmd As String
 
         'Upload and save the file
-        Dim CSVPath As String = Server.MapPath("~/Files/") + Path.GetFileName(FileName)
+        Dim CSVPath As String = HttpContext.Current.Server.MapPath("~/Files/") + Path.GetFileName(FileName)
 
         'Read the contents of CSV file
         Dim csvData As String = File.ReadAllText(CSVPath)
@@ -61,9 +156,9 @@ Public Class DataSetup
         myConn.Close()
         Return True
     End Function
-    Public Function S_CSVImport(FileName As String) As Boolean
+    Private Function S_CSVImport(FileName As String) As Boolean
         'Create a Connection object
-        myConn = New SqlConnection("Initial Catalog=Pets;Data Source=tcp:mssqluk18.prosql.net;User ID=oliver;Password=Vintage12!$;")
+        Dim myConn = New SqlConnection("Initial Catalog=Pets;Data Source=tcp:mssqluk18.prosql.net;User ID=oliver;Password=Vintage12!$;")
 
         'Connect to DB
         myConn.Open()
@@ -71,7 +166,7 @@ Public Class DataSetup
         Dim Cmd As String
         Dim ID As Guid
         'Upload and save the file  
-        Dim CSVPath As String = Server.MapPath("~/Files/") + Path.GetFileName(FileName)
+        Dim CSVPath As String = HttpContext.Current.Server.MapPath("~/Files/") + Path.GetFileName(FileName)
 
         'Create a DataTable
         Dim dt As New DataTable()
@@ -120,7 +215,7 @@ Public Class DataSetup
         Dim SQLNum As UShort 'Variable to represent column number currently being fed into SQL query
 
         'Create a Connection object
-        myConn = New SqlConnection("Initial Catalog=Pets;Data Source=tcp:mssqluk18.prosql.net;User ID=oliver;Password=Vintage12!$;")
+        Dim myConn = New SqlConnection("Initial Catalog=Pets;Data Source=tcp:mssqluk18.prosql.net;User ID=oliver;Password=Vintage12!$;")
 
         'Connect to DB
         myConn.Open()
@@ -128,7 +223,7 @@ Public Class DataSetup
         Dim Cmd As String
         Dim ID As Guid
         'Upload and save the file  
-        Dim CSVPath As String = Server.MapPath("~/Files/") + Path.GetFileName(FileName)
+        Dim CSVPath As String = HttpContext.Current.Server.MapPath("~/Files/") + Path.GetFileName(FileName)
 
         'Create a DataTable
         Dim dt As New DataTable()

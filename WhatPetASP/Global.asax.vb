@@ -10,9 +10,9 @@ Public Class MvcApplication
         BundleConfig.RegisterBundles(BundleTable.Bundles)
 
         ' Setup the Datbase
-        Database.CreateTables()
+        DataSetup.CreateTables()
 
         ' Add static data
-        Database.InsertIntoDB()
+        DataSetup.InsertIntoDB()
     End Sub
 End Class
