@@ -11,6 +11,15 @@ Public Class MvcApplication
         ' DataSetup.CreateTables()
         ' Add static data
         ' DataSetup.InsertIntoDB()
-        DataSetup.PopulateData()
+
+        Dim PetClassData As New PetClass With {
+            .ClassName = "Mammal"
+        }
+        DataSetup.PopulatePetClassData(PetClassData)
+
+        Dim SpeciesData As New Species With {
+            .SpeciesName = "Cat",
+            .PetClassPetClassID = 1
+        }
     End Sub
 End Class

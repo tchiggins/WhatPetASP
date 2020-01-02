@@ -291,14 +291,26 @@ Public Class DataSetup
         Next
         Return True
     End Function
-    Shared Function PopulateData()
+    Shared Function PopulatePetClassData(Data As PetClass)
         Dim db As New PetClassDBContext
-        Dim myPetClass As New PetClass
-        myPetClass.ClassName = "Test"
-        myPetClass.PetClassID = 2
-        db.AllPetClasses.Add(myPetClass)
+        db.AllPetClasses.Add(Data)
         db.SaveChanges()
 
         Return True
     End Function
+    Shared Function PopulatePetTypeData(Data As PetType)
+        Dim db As New PetTypeDBContext
+        db.AllPetTypes.Add(Data)
+        db.SaveChanges()
+
+        Return True
+    End Function
+    Shared Function PopulateSpeciesData(Data As Species)
+        Dim db As New SpeciesDBContext
+        db.AllSpecies.Add(Data)
+        db.SaveChanges()
+
+        Return True
+    End Function
+
 End Class
