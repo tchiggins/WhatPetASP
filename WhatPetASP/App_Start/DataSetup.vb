@@ -291,6 +291,31 @@ Public Class DataSetup
         Next
         Return True
     End Function
+
+    Shared Function ClearPetClassTable()
+        Dim db As New PetClassDBContext
+
+        db.AllPetClasses.RemoveRange(db.AllPetClasses)
+        db.SaveChanges()
+
+        Return True
+    End Function
+    Shared Function ClearSpeciesTable()
+        Dim db As New SpeciesDBContext
+
+        db.AllSpecies.RemoveRange(db.AllSpecies)
+        db.SaveChanges()
+
+        Return True
+    End Function
+    Shared Function ClearPetTypeTable()
+        Dim db As New PetTypeDBContext
+
+        db.AllPetTypes.RemoveRange(db.AllPetTypes)
+        db.SaveChanges()
+
+        Return True
+    End Function
     Shared Function PopulatePetClassData(Data As PetClass)
         Dim db As New PetClassDBContext
         db.AllPetClasses.Add(Data)
@@ -311,6 +336,14 @@ Public Class DataSetup
         db.SaveChanges()
 
         Return True
+    End Function
+
+    Shared Function GetPetClassID(MyClassName As String) As Integer
+        Dim db As New PetClassDBContext
+        Dim MyPetClass = From PetClasses In db.AllPetClasses
+                         Where PetClasses.ClassName = MyClassName
+                         Select PetClasses.PetClassID
+        Return MyPetClass.FirstOrDefault()
     End Function
 
 End Class
