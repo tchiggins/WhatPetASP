@@ -11,7 +11,7 @@ End Code
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(Function(model) model.SpeciesID)
+            @Html.DisplayNameFor(Function(model) model.SpeciesSpeciesID)
         </th>
         <th>
             @Html.DisplayNameFor(Function(model) model.TypeName)
@@ -43,7 +43,7 @@ End Code
 @For Each item In Model
     @<tr>
         <td>
-            @Html.DisplayFor(Function(modelItem) item.SpeciesID)
+            @Html.DisplayFor(Function(modelItem) item.SpeciesSpeciesID)
         </td>
         <td>
             @Html.DisplayFor(Function(modelItem) item.TypeName)

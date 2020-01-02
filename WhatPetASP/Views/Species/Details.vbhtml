@@ -18,11 +18,11 @@ End Code
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(Function(model) model.PetClassID)
+            @Html.DisplayNameFor(Function(model) model.PetClassPetClassID)
         </dt>
 
         <dd>
-            @Html.DisplayFor(Function(model) model.PetClassID)
+            @Html.DisplayFor(Function(model) model.PetClassPetClassID)
         </dd>
 
     </dl>

@@ -14,7 +14,7 @@ End Code
             @Html.DisplayNameFor(Function(model) model.SpeciesName)
         </th>
         <th>
-            @Html.DisplayNameFor(Function(model) model.PetClassID)
+            @Html.DisplayNameFor(Function(model) model.PetClassPetClassID)
         </th>
         <th></th>
     </tr>
@@ -25,7 +25,7 @@ End Code
             @Html.DisplayFor(Function(modelItem) item.SpeciesName)
         </td>
         <td>
-            @Html.DisplayFor(Function(modelItem) item.PetClassID)
+            @Html.DisplayFor(Function(modelItem) item.PetClassPetClassID)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", New With {.id = item.SpeciesID }) |

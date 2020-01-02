@@ -13,7 +13,7 @@ End Class
 Public Class Species
     Public Property SpeciesID() As Integer
     Public Property SpeciesName() As String
-    Public Property PetClassID As Integer
+    Public Property PetClassPetClassID As Integer
 End Class
 Public Class SpeciesDBContext
     Inherits DbContext
@@ -24,7 +24,7 @@ End Class
 'PetSize will work on values of either Small, Average, or Large (as determined by the average for that particular species)
 Public Class PetType
     Public Property PetTypeID() As Integer
-    Public Property SpeciesID() As Integer
+    Public Property SpeciesSpeciesID() As Integer
     Public Property TypeName() As String
     Public Property PetSize() As String
     Public Property PetSolitary() As String

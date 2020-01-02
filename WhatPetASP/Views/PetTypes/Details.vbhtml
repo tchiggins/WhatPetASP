@@ -10,11 +10,11 @@ End Code
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(Function(model) model.SpeciesID)
+            @Html.DisplayNameFor(Function(model) model.SpeciesSpeciesID)
         </dt>
 
         <dd>
-            @Html.DisplayFor(Function(model) model.SpeciesID)
+            @Html.DisplayFor(Function(model) model.SpeciesSpeciesID)
         </dd>
 
         <dt>

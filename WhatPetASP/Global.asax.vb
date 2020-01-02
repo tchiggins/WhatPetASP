@@ -11,5 +11,6 @@ Public Class MvcApplication
         ' DataSetup.CreateTables()
         ' Add static data
         ' DataSetup.InsertIntoDB()
+        DataSetup.PopulateData()
     End Sub
 End Class

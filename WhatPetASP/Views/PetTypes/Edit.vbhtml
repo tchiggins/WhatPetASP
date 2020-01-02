@@ -15,10 +15,10 @@ End Code
         @Html.HiddenFor(Function(model) model.PetTypeID)
 
         <div class="form-group">
-            @Html.LabelFor(Function(model) model.SpeciesID, htmlAttributes:= New With { .class = "control-label col-md-2" })
+            @Html.LabelFor(Function(model) model.SpeciesSpeciesID, htmlAttributes:=New With {.class = "control-label col-md-2"})
             <div class="col-md-10">
-                @Html.EditorFor(Function(model) model.SpeciesID, New With { .htmlAttributes = New With { .class = "form-control" } })
-                @Html.ValidationMessageFor(Function(model) model.SpeciesID, "", New With { .class = "text-danger" })
+                @Html.EditorFor(Function(model) model.SpeciesSpeciesID, New With {.htmlAttributes = New With {.class = "form-control"}})
+                @Html.ValidationMessageFor(Function(model) model.SpeciesSpeciesID, "", New With {.class = "text-danger"})
             </div>
         </div>
 
