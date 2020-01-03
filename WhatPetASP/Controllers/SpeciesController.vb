@@ -14,12 +14,12 @@ Namespace Controllers
 
         Private db As New SpeciesDBContext
 
-        ' GET: Species
+        'GET: Species
         Function Index() As ActionResult
             Return View(db.AllSpecies.ToList())
         End Function
 
-        ' GET: Species/Details/5
+        'GET: Species/Details/5
         Function Details(ByVal id As Integer?) As ActionResult
             If IsNothing(id) Then
                 Return New HttpStatusCodeResult(HttpStatusCode.BadRequest)
@@ -31,12 +31,12 @@ Namespace Controllers
             Return View(species)
         End Function
 
-        ' GET: Species/Create
+        'GET: Species/Create
         Function Create() As ActionResult
             Return View()
         End Function
 
-        ' POST: Species/Create
+        'POST: Species/Create
         'To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         'more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         <HttpPost()>
@@ -50,7 +50,7 @@ Namespace Controllers
             Return View(species)
         End Function
 
-        ' GET: Species/Edit/5
+        'GET: Species/Edit/5
         Function Edit(ByVal id As Integer?) As ActionResult
             If IsNothing(id) Then
                 Return New HttpStatusCodeResult(HttpStatusCode.BadRequest)
@@ -62,7 +62,7 @@ Namespace Controllers
             Return View(species)
         End Function
 
-        ' POST: Species/Edit/5
+        'POST: Species/Edit/5
         'To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         'more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         <HttpPost()>
@@ -76,7 +76,7 @@ Namespace Controllers
             Return View(species)
         End Function
 
-        ' GET: Species/Delete/5
+        'GET: Species/Delete/5
         Function Delete(ByVal id As Integer?) As ActionResult
             If IsNothing(id) Then
                 Return New HttpStatusCodeResult(HttpStatusCode.BadRequest)
@@ -88,7 +88,7 @@ Namespace Controllers
             Return View(species)
         End Function
 
-        ' POST: Species/Delete/5
+        'POST: Species/Delete/5
         <HttpPost()>
         <ActionName("Delete")>
         <ValidateAntiForgeryToken()>

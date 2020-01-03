@@ -4,7 +4,7 @@ Namespace Controllers
     Public Class WhatPetController
         Inherits Controller
 
-        ' GET: WhatPet
+        'GET: WhatPet
         Public Function Index() As ActionResult
             Return View()
         End Function

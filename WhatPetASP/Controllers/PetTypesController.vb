@@ -14,12 +14,12 @@ Namespace Controllers
 
         Private db As New PetTypeDBContext
 
-        ' GET: PetTypes
+        'GET: PetTypes
         Function Index() As ActionResult
             Return View(db.AllPetTypes.ToList())
         End Function
 
-        ' GET: PetTypes/Details/5
+        'GET: PetTypes/Details/5
         Function Details(ByVal id As Integer?) As ActionResult
             If IsNothing(id) Then
                 Return New HttpStatusCodeResult(HttpStatusCode.BadRequest)
@@ -31,12 +31,12 @@ Namespace Controllers
             Return View(petType)
         End Function
 
-        ' GET: PetTypes/Create
+        'GET: PetTypes/Create
         Function Create() As ActionResult
             Return View()
         End Function
 
-        ' POST: PetTypes/Create
+        'POST: PetTypes/Create
         'To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         'more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         <HttpPost()>
@@ -50,7 +50,7 @@ Namespace Controllers
             Return View(petType)
         End Function
 
-        ' GET: PetTypes/Edit/5
+        'GET: PetTypes/Edit/5
         Function Edit(ByVal id As Integer?) As ActionResult
             If IsNothing(id) Then
                 Return New HttpStatusCodeResult(HttpStatusCode.BadRequest)
@@ -62,7 +62,7 @@ Namespace Controllers
             Return View(petType)
         End Function
 
-        ' POST: PetTypes/Edit/5
+        'POST: PetTypes/Edit/5
         'To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         'more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         <HttpPost()>
@@ -76,7 +76,7 @@ Namespace Controllers
             Return View(petType)
         End Function
 
-        ' GET: PetTypes/Delete/5
+        'GET: PetTypes/Delete/5
         Function Delete(ByVal id As Integer?) As ActionResult
             If IsNothing(id) Then
                 Return New HttpStatusCodeResult(HttpStatusCode.BadRequest)
@@ -88,7 +88,7 @@ Namespace Controllers
             Return View(petType)
         End Function
 
-        ' POST: PetTypes/Delete/5
+        'POST: PetTypes/Delete/5
         <HttpPost()>
         <ActionName("Delete")>
         <ValidateAntiForgeryToken()>

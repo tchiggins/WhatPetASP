@@ -23,4 +23,3 @@ Public Module BundleConfig
                   "~/Content/site.css"))
     End Sub
 End Module
-
