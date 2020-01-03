@@ -2,43 +2,6 @@
 Imports System.IO
 
 Public Class DataSetup
-    Shared Function InsertIntoDB()
-        'Create a Connection object
-        Dim myConn = New SqlConnection("Initial Catalog=Pets;Data Source=tcp:mssqluk18.prosql.net;User ID=oliver;Password=Vintage12!$;")
-
-        'Connect to DB
-        myConn.Open()
-
-        Dim myCmd As SqlCommand
-        Dim Count
-
-        myCmd = myConn.CreateCommand
-        myCmd.CommandText = Command()
-
-        myCmd.CommandText = "DELETE FROM pets.dbo.PetClass"
-        'Execute the command.
-        Count = myCmd.ExecuteNonQuery()
-
-        myCmd.CommandText = "DELETE FROM pets.dbo.Species"
-        'Execute the command.
-        Count = myCmd.ExecuteNonQuery()
-
-
-        myCmd.CommandText = "DELETE FROM pets.dbo.PetType"
-        'Execute the command.
-        Count = myCmd.ExecuteNonQuery()
-
-        Dim CSVImportVB As New DataSetup
-        CSVImportVB.PC_CSVImport("PetClass.csv")
-        CSVImportVB.S_CSVImport("Species.csv")
-        CSVImportVB.PT_CSVImport("PetType.csv")
-
-        myConn.Close()
-
-        Return True
-
-    End Function
-
     Shared Function CreateTables() As Boolean
         'Create a Connection object
         Dim myConn = New SqlConnection("Initial Catalog=Pets;Data Source=tcp:mssqluk18.prosql.net;User ID=oliver;Password=Vintage12!$;")
@@ -123,14 +86,7 @@ Public Class DataSetup
         myReader.Close()
         Return results
     End Function
-    Private Function PC_CSVImport(FileName As String) As Boolean
-        'Create a Connection object
-        Dim myConn = New SqlConnection("Initial Catalog=Pets;Data Source=tcp:mssqluk18.prosql.net;User ID=oliver;Password=Vintage12!$;")
-
-        'Connect to DB
-        myConn.Open()
-        Dim Cmd As String
-
+    Shared Function PC_CSVImport(FileName As String) As Boolean
         'Upload and save the file
         Dim CSVPath As String = HttpContext.Current.Server.MapPath("~/Files/") + Path.GetFileName(FileName)
 
@@ -144,16 +100,15 @@ Public Class DataSetup
                 'Execute a loop over the columns
                 For Each cell As String In row.Split(","c)
                     If cell.Length > 1 Then
-                        Cmd = "INSERT INTO pets.dbo.PetClass (PetClassID, ClassName) VALUES (NEWID(), '"
-                        Cmd += Replace(cell, vbLf, "")
-                        Cmd += "')"
-                        SendToDB(myConn, Cmd)
+                        Dim PetClassData As New PetClass With {
+                            .ClassName = Replace(cell, vbLf, "")
+                        }
+                        DataSetup.PopulatePetClassData(PetClassData)
                     End If
                     i += 1
                 Next
             End If
         Next
-        myConn.Close()
         Return True
     End Function
     Private Function S_CSVImport(FileName As String) As Boolean
@@ -345,5 +300,4 @@ Public Class DataSetup
                          Select PetClasses.PetClassID
         Return MyPetClass.FirstOrDefault()
     End Function
-
 End Class
