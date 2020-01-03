@@ -110,14 +110,6 @@ Public Class DataSetup
         Return True
     End Function
     Shared Function S_CSVImport(FileName As String) As Boolean
-        'Create a Connection object
-        Dim myConn = New SqlConnection("Initial Catalog=Pets;Data Source=tcp:mssqluk18.prosql.net;User ID=oliver;Password=Vintage12!$;")
-
-        'Connect to DB
-        myConn.Open()
-
-        Dim Cmd As String
-        Dim ID As Guid
         'Upload and save the file  
         Dim CSVPath As String = HttpContext.Current.Server.MapPath("~/Files/") + Path.GetFileName(FileName)
 
@@ -130,7 +122,6 @@ Public Class DataSetup
         Dim cell As String
         Dim colNum As Integer = 0
         Const numCols As Integer = 2
-        Dim rowNum As Integer = 0
         'Execute a loop over the rows
         For Each row As String In csvData.Split(ControlChars.Cr)
             If Not String.IsNullOrEmpty(row) Then
@@ -139,29 +130,15 @@ Public Class DataSetup
                 'Execute a loop over the columns
                 For Each cell In row.Split(","c)
                     If colNum < numCols Then
-                        'Fixes problem with linefeed exception
-                        dt.Rows(rowNum)(colNum) = Replace(cell, vbLf, "")
+                        Dim SpeciesData As New Species With {
+                            .SpeciesName = Replace(cell, vbLf, "")
+                        }
+                        DataSetup.PopulateSpeciesData(SpeciesData)
                     End If
                     colNum += 1
                 Next
             End If
-            rowNum += 1
         Next
-        For readRow As Integer = 0 To (rowNum - 1) Step 1
-            If dt.Rows(readRow)(0).Length > 1 Then
-                Cmd = "SELECT TOP (1) PetClassID FROM pets.dbo.PetClass WHERE ClassName = '"
-                Cmd += dt.Rows(readRow)(0)
-                Cmd += "' ;"
-                ID = SendToDBReturn(myConn, Cmd, "PetClassID")
-                Cmd = "INSERT INTO pets.dbo.Species (SpeciesID, SpeciesName, PetClassID) VALUES (NEWID(), '"
-                Cmd += dt.Rows(readRow)(1)
-                Cmd += "', '"
-                Cmd += ID.ToString()
-                Cmd += "' );"
-                SendToDB(myConn, Cmd)
-            End If
-        Next
-        myConn.Close()
         Return True
     End Function
     Shared Function PT_CSVImport(FileName As String) As Boolean
