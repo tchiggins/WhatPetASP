@@ -3,17 +3,14 @@
  * @version 1.16.0
  * @license
  * Copyright (c) 2016 Federico Zivolo and contributors
- *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -2569,14 +2566,9 @@ var Popper = function () {
      * Schedules an update. It will run on the next UI update available.
      * @method scheduleUpdate
      * @memberof Popper
-     */
-
-
-    /**
      * Collection of utilities useful when writing custom modifiers.
      * Starting from version 1.7, this method is available only if you
      * include `popper-utils.js` before `popper.js`.
-     *
      * **DEPRECATION**: This way to access PopperUtils is deprecated
      * and will be removed in v2! Use the PopperUtils module directly instead.
      * Due to the high instability of the methods contained in Utils, we can't
@@ -2598,11 +2590,9 @@ var Popper = function () {
  * and lets you use it as replacement of a real DOM node.<br />
  * You can use this method to position a popper relatively to a set of coordinates
  * in case you don't have a DOM node to use as reference.
- *
  * ```
  * new Popper(referenceObject, popperNode);
  * ```
- *
  * NB: This feature isn't supported in Internet Explorer 10.
  * @name referenceObject
  * @property {Function} data.getBoundingClientRect
@@ -2612,13 +2602,9 @@ var Popper = function () {
  * @property {number} data.clientHeight
  * An ES6 getter that will return the height of the virtual reference element.
  */
-
-
 Popper.Utils = (typeof window !== 'undefined' ? window : global).PopperUtils;
 Popper.placements = placements;
 Popper.Defaults = Defaults;
-
 return Popper;
-
 })));
 //# sourceMappingURL=popper.js.map

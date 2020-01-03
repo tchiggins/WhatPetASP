@@ -1,7 +1,5 @@
 // @flow
-
 export type Position = 'top' | 'right' | 'bottom' | 'left';
-
 export type Placement =
   | 'auto-start'
   | 'auto'
@@ -18,7 +16,6 @@ export type Placement =
   | 'left-end'
   | 'left'
   | 'left-start';
-
 export type Offset = {
   top: number,
   left: number,
@@ -152,5 +149,4 @@ declare class Popper {
     options?: Options
   ): Instance;
 }
-
 declare export default typeof Popper;
