@@ -92,7 +92,6 @@ Public Class DataSetup
 
         'Read the contents of CSV file
         Dim csvData As String = File.ReadAllText(CSVPath)
-        Dim i As Integer = 0
 
         'Execute a loop over the rows
         For Each row As String In csvData.Split(ControlChars.Cr)
@@ -105,13 +104,12 @@ Public Class DataSetup
                         }
                         DataSetup.PopulatePetClassData(PetClassData)
                     End If
-                    i += 1
                 Next
             End If
         Next
         Return True
     End Function
-    Private Function S_CSVImport(FileName As String) As Boolean
+    Shared Function S_CSVImport(FileName As String) As Boolean
         'Create a Connection object
         Dim myConn = New SqlConnection("Initial Catalog=Pets;Data Source=tcp:mssqluk18.prosql.net;User ID=oliver;Password=Vintage12!$;")
 
@@ -166,7 +164,7 @@ Public Class DataSetup
         myConn.Close()
         Return True
     End Function
-    Public Function PT_CSVImport(FileName As String) As Boolean
+    Shared Function PT_CSVImport(FileName As String) As Boolean
         Dim SQLNum As UShort 'Variable to represent column number currently being fed into SQL query
 
         'Create a Connection object
@@ -293,11 +291,19 @@ Public Class DataSetup
         Return True
     End Function
 
-    Shared Function GetPetClassID(MyClassName As String) As Integer
+    Shared Function GetPetClassID(PCID As String) As Integer
         Dim db As New PetClassDBContext
         Dim MyPetClass = From PetClasses In db.AllPetClasses
-                         Where PetClasses.ClassName = MyClassName
+                         Where PetClasses.ClassName = PCID
                          Select PetClasses.PetClassID
         Return MyPetClass.FirstOrDefault()
+    End Function
+
+    Shared Function GetSpeciesID(SPID As String) As Integer
+        Dim db As New SpeciesDBContext
+        Dim MySpecies = From Species In db.AllSpecies
+                        Where Species.SpeciesName = SPID
+                        Select Species.SpeciesID
+        Return MySpecies.FirstOrDefault()
     End Function
 End Class
