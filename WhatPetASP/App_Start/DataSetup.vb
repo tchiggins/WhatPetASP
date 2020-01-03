@@ -97,6 +97,7 @@ Public Class DataSetup
         Return True
     End Function
 
+    'Clear data from PetClass data table
     Shared Function ClearPetClassTable()
         Dim db As New PetClassDBContext
 
@@ -106,6 +107,7 @@ Public Class DataSetup
         Return True
     End Function
 
+    'Clear data from Species data table
     Shared Function ClearSpeciesTable()
         Dim db As New SpeciesDBContext
 
@@ -115,6 +117,7 @@ Public Class DataSetup
         Return True
     End Function
 
+    'Clear data from PetType data table
     Shared Function ClearPetTypeTable()
         Dim db As New PetTypeDBContext
 
@@ -124,6 +127,7 @@ Public Class DataSetup
         Return True
     End Function
 
+    'Populate PetClass data table
     Shared Function PopulatePetClassData(Data As PetClass)
         Dim db As New PetClassDBContext
         db.AllPetClasses.Add(Data)
@@ -132,6 +136,7 @@ Public Class DataSetup
         Return True
     End Function
 
+    'Populate PetType data table
     Shared Function PopulatePetTypeData(Data As PetType)
         Dim db As New PetTypeDBContext
         db.AllPetTypes.Add(Data)
@@ -140,6 +145,7 @@ Public Class DataSetup
         Return True
     End Function
 
+    'Populate Species data table
     Shared Function PopulateSpeciesData(Data As Species)
         Dim db As New SpeciesDBContext
         db.AllSpecies.Add(Data)

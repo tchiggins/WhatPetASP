@@ -11,6 +11,7 @@ Public Class PetClassDBContext
     Public Property AllPetClasses() As DbSet(Of PetClass)
 End Class
 
+'Species table (cat, dog etc.)
 Public Class Species
     Public Property SpeciesID() As Integer
     Public Property SpeciesName() As String
@@ -22,8 +23,7 @@ Public Class SpeciesDBContext
     Public Property AllSpecies() As DbSet(Of Species)
 End Class
 
-'PetType table (characteristics of specific breed)
-'PetSize will work on values of either Small, Average, or Large (as determined by the average for that particular species)
+'PetType table (specific breed + characteristics for breed)
 Public Class PetType
     Public Property PetTypeID() As Integer
     Public Property SpeciesSpeciesID() As Integer
