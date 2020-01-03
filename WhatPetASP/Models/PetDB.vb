@@ -5,6 +5,7 @@ Public Class PetClass
     Public Property PetClassID() As Integer
     Public Property ClassName() As String
 End Class
+
 Public Class PetClassDBContext
     Inherits DbContext
     Public Property AllPetClasses() As DbSet(Of PetClass)
@@ -15,6 +16,7 @@ Public Class Species
     Public Property SpeciesName() As String
     Public Property PetClassPetClassID As Integer
 End Class
+
 Public Class SpeciesDBContext
     Inherits DbContext
     Public Property AllSpecies() As DbSet(Of Species)
@@ -34,6 +36,7 @@ Public Class PetType
     Public Property PetDiet() As String
     Public Property PetImage() As String
 End Class
+
 Public Class PetTypeDBContext
     Inherits DbContext
     Public Property AllPetTypes() As DbSet(Of PetType)
