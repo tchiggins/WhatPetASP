@@ -41,7 +41,9 @@ Public Class DataSetup
         Dim csvData As String = File.ReadAllText(CSVPath)
         Dim cell As String
         Dim colNum As Integer = 0
+        Dim rowNum As Integer = 0
         Const numCols As Integer = 2
+
         'Execute a loop over the rows
         For Each row As String In csvData.Split(ControlChars.Cr)
             If Not String.IsNullOrEmpty(row) Then
@@ -50,13 +52,23 @@ Public Class DataSetup
                 'Execute a loop over the columns
                 For Each cell In row.Split(","c)
                     If colNum < numCols Then
-                        Dim SpeciesData As New Species With {
-                            .SpeciesName = Replace(cell, vbLf, "")
-                        }
-                        DataSetup.PopulateSpeciesData(SpeciesData)
+                        'Fixes problem with linefeed exception
+                        dt.Rows(rowNum)(colNum) = Replace(cell, vbLf, "")
                     End If
                     colNum += 1
                 Next
+            End If
+            rowNum += 1
+        Next
+        For readRow As Integer = 0 To (rowNum - 1) Step 1
+            If dt.Rows(readRow)(0).Length > 1 Then
+                'Read the ID
+                Dim PetClassID As ULong = DataSetup.GetPetClassID(dt(readRow)(1))
+                Dim SpeciesData As New Species With {
+                .SpeciesName = dt(readRow)(0),
+                .PetClassPetClassID = PetClassID
+                }
+                DataSetup.PopulateSpeciesData(SpeciesData)
             End If
         Next
         Return True

@@ -17,14 +17,5 @@ Public Class MvcApplication
         DataSetup.PC_CSVImport("PetClass.csv")
         DataSetup.SP_CSVImport("Species.csv")
         DataSetup.PT_CSVImport("PetType.csv")
-
-        'Read the ID
-        Dim PetClassID = DataSetup.GetPetClassID("Mammal")
-
-        Dim SpeciesData As New Species With {
-            .SpeciesName = "Cat",
-            .PetClassPetClassID = PetClassID
-        }
-        DataSetup.PopulateSpeciesData(SpeciesData)
     End Sub
 End Class
