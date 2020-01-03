@@ -174,50 +174,15 @@ Public Class DataSetup
                 'Execute a loop over the columns
                 For Each cell In row.Split(","c)
                     If colNum < numCols Then
-                        'Fixes problem with linefeed exception
-                        dt.Rows(rowNum)(colNum) = Replace(cell, vbLf, "")
+                        Dim PetTypeData As New PetType With {
+                            .TypeName = Replace(cell, vbLf, "")
+                        }
+                        DataSetup.PopulatePetTypeData(PetTypeData)
                     End If
                     colNum += 1
                 Next
             End If
             rowNum += 1
-        Next
-        For readRow As Integer = 0 To (rowNum - 1) Step 1
-            SQLNum = 0
-            If dt.Rows(readRow)(0).Length > 1 Then
-                Cmd = "SELECT TOP (1) SpeciesID FROM pets.dbo.Species WHERE SpeciesName = '"
-                Cmd += dt.Rows(readRow)(SQLNum) 'Column 0
-                SQLNum += 1
-                Cmd += "' ;"
-                ID = SendToDBReturn(myConn, Cmd, "SpeciesID")
-                Cmd = "INSERT INTO pets.dbo.PetType (TypeID, SpeciesID, TypeName, PetSize, PetSolitary, PetIndoors, PetOutdoors, PetWalk, PetDiet, PetImage) VALUES (NEWID(), '"
-                Cmd += ID.ToString()
-                Cmd += "', '"
-                Cmd += dt.Rows(readRow)(SQLNum) 'Column 1
-                SQLNum += 1
-                Cmd += "', '"
-                Cmd += dt.Rows(readRow)(SQLNum) 'Column 2
-                SQLNum += 1
-                Cmd += "', '"
-                Cmd += Str(dt.Rows(readRow)(SQLNum)) 'Column 3
-                SQLNum += 1
-                Cmd += "', '"
-                Cmd += Str(dt.Rows(readRow)(SQLNum)) 'Column 4
-                SQLNum += 1
-                Cmd += "', '"
-                Cmd += Str(dt.Rows(readRow)(SQLNum)) 'Column 5
-                SQLNum += 1
-                Cmd += "', '"
-                Cmd += Str(dt.Rows(readRow)(SQLNum)) 'Column 6
-                SQLNum += 1
-                Cmd += "', '"
-                Cmd += dt.Rows(readRow)(SQLNum) 'Column 7
-                SQLNum += 1
-                Cmd += "', '"
-                Cmd += dt.Rows(readRow)(SQLNum) 'Column 8
-                Cmd += "' ) ;"
-                SendToDB(myConn, Cmd)
-            End If
         Next
         Return True
     End Function
