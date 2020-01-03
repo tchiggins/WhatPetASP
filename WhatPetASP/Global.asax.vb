@@ -15,6 +15,8 @@ Public Class MvcApplication
 
         ' Populate them from the csv files
         DataSetup.PC_CSVImport("PetClass.csv")
+        DataSetup.SP_CSVImport("Species.csv")
+        DataSetup.PT_CSVImport("PetType.csv")
 
         ' Read the ID
         Dim PetClassID = DataSetup.GetPetClassID("Mammal")
